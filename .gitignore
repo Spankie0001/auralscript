@@ -1,0 +1,39 @@
+# Audio files — don't upload these
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+*.m4a
+ 
+# AuralScript outputs
+*_auralscript.txt
+
+# PANNs model files — too large for GitHub
+panns_data/
+*.pth
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
