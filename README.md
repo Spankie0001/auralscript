@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AuralScript
 
 **AuralScript** converts audio files into structured text schemas that can be read and analyzed by a Large Language Model (LLM) like Claude.
@@ -192,3 +193,7 @@ Issues and PRs welcome. Key areas for improvement:
 - Similarity scorer / song library database mode
 - Better distortion detection on brick-wall limited audio
 - Vocal delivery classification (mumbled vs shouted vs sung)
+=======
+# auralscript
+Convert audio files to LLM-readable text schemas for AI music analysis
+>>>>>>> 0c30ed1992de886ba9c762eaace305044a3ab736
