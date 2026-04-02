@@ -1,0 +1,162 @@
+=================================================================
+AURALSCRIPT v2.3
+Generated: 2026-04-02 15:44:08
+Source:    art.mp3
+Mode:      Raw Suno Output
+=================================================================
+
+── META ──────────────────────────────────────────────────────
+  Duration:            8:32.9
+  BPM:                 110.0
+  Tempo Stability:     Stable (+-0.0 BPM variance)
+  Key:                 F Major
+  Sample Rate:         44100 Hz
+  Beat Strength:       1.195
+
+── ENERGY ────────────────────────────────────────────────────
+  Level:               Medium (balanced)
+  RMS Mean:            0.0847
+  RMS Peak:            0.2485
+  Dynamic Range:       31.9 dB  (active frames only)
+  Consistency:         Variable (high dynamics)
+
+── BASS ──────────────────────────────────────────────────────
+  Presence:            Bass-forward (warm, heavy low end)
+  Character:           Mid-bass dominant (guitar bass, punchy kick)
+  Bass vs Hi-Mid:      +2.5 dB  (0=balanced, +=bass-heavy, -=thin)
+  Sub (20-80Hz):       -8.8 dB  rel to full signal
+  Mid-Bass (80-250Hz): -3.9 dB  rel to full signal
+
+── ONSET DENSITY ─────────────────────────────────────────────
+  Arrangement:         Busy (active, layered arrangement)
+  Onsets/sec:          3.61
+  Total Onsets:        1853
+
+── SAMPLE / LOOP DETECTION ───────────────────────────────────
+  Quantization:        Highly irregular (free tempo, spoken word, or ambient)
+  IOI Variance (CV):   0.832  (0=machine-perfect, >0.5=human/free)
+  Recurrence:          Low repetition (through-composed or improvised)
+  Recurrence Score:    0.007  (higher = more looping/repetition)
+
+── SPECTRUM ──────────────────────────────────────────────────
+  Brightness:          Balanced/Neutral
+  Centroid:            2315.0 Hz
+  Bandwidth:           2417.0 Hz
+  Rolloff (85%):       4635.9 Hz
+
+── DISTORTION / FLATNESS ─────────────────────────────────────
+  Distortion Est:      Moderate — overdrive or distorted power chords likely
+  HF/Mid Ratio:        -11.6 dB  (8-16kHz vs 1-4kHz)
+  Flatness Mean:       0.0038  (data only — unreliable on compressed audio)
+  Flatness Variance:   0.0601
+
+── STRUCTURE ─────────────────────────────────────────────────
+  Pattern:             Partial dynamic contrast (some quiet/loud movement)
+  Loud Segments:       1/16
+  Mid Segments:        11/16
+  Quiet Segments:      4/16
+  Transitions:         2
+
+── HARMONIC COMPLEXITY ───────────────────────────────────────
+  Complexity:          Moderate-complex (active harmony or rich timbre)
+  Tonal Stability:     Moderate tonal center (some ambiguity)
+  Chroma Entropy:      3.573  (higher = more harmonic variety)
+  Chord Change Rate:   0.126  (higher = faster changes)
+
+── REVERB / ROOM ─────────────────────────────────────────────
+  Room Size:           Spacious (large room, ambient, or heavy reverb)
+  Mean Decay Time:     0.334s  (to -20dB after transient)
+  Instrument Hint:     Highly variable decay (organic/live instruments likely)
+  Decay Consistency:   1.104  (lower = more electronic)
+
+── STEREO WIDTH ──────────────────────────────────────────────
+  Width:               Moderate stereo width (produced feel)
+  Side/Mid Ratio:      0.416
+
+── TEXTURE ───────────────────────────────────────────────────
+  Balance:             Balanced harmonic/percussive mix
+  Roughness:           Low (smooth, clean, or sustained tones)
+  ZCR:                 0.0626
+  MFCC[1-5]:           [-223.02, 162.34, -45.25, 38.5, 0.73]
+  MFCC[6-13]:          [7.57, 0.68, 3.27, 4.7, -3.19, 0.11, 0.05, 2.58]
+
+── VOCAL PRESENCE ────────────────────────────────────────────
+  Level:               Vocals well forward in mix
+  Character:           Warm/boxy (lower mid dominant — may lack air)
+  Vocal Range dB:      -4.6 dB  rel to full signal
+  Presence Range dB:   -10.7 dB  rel to full signal
+
+── TRANSIENTS ────────────────────────────────────────────────
+  Attack:              Sharp attacks (energetic, punchy)
+  Peak/Mean Ratio:     22.23  (higher = snappier)
+  Mean Rise Frames:    6.0
+
+── WAVEFORM (amplitude over time) ───────────────────────────
+  |            ▄                   ▄  █                        |
+  |            █                   █  █         ▄              |
+  |   ▄     ▄  █    ▄              █▄▄█         █              |
+  |   █▄    █ ▄█  ▄ █ ▄   ▄ ▄  ▄ ▄ ████   ▄     █ ▄  ▄         |
+  |  ▄██ ▄▄ █ ██▄▄█ █ █ ▄ █▄█  █▄█▄████ ▄▄█ ▄▄  █ █▄▄█         |
+  |  ███▄██ █▄█████ █▄█ █▄███ ▄████████ ███ ██ ▄█▄████▄▄       |
+  |  ██████ ███████▄███▄█████▄█████████▄███▄██ █████████▄▄▄▄   |
+  |▄▄██████▄██████████████████████████████████▄█████████████▄▄▄|
+  0                                                        8:32
+
+── TIMELINE (16 segments) ────────────────────────────────────
+  Time     RMS      Centroid     Key              Den/s   VocaldB   PConf   Notes
+  ------------------------------------------------------------------------------
+  00:00.0  0.0641   2835.6       F Major          2.9     -6.8      0.16   
+  00:32.1  0.095    2482.2       F Major          4.6     -4.8      0.05   energy up
+  01:04.1  0.094    2101.9       F Major          4.1     -4.4      0.03   
+  01:36.2  0.0974   2558.5       F Major          4.5     -4.4      0.09   
+  02:08.2  0.0882   2306.1       F Major          3.8     -4.1      0.04   
+  02:40.3  0.1018   2488.5       F Major          4.2     -4.6      0.09   
+  03:12.3  0.1049   2523.4       F Major          4.3     -3.8      0.11   
+  03:44.4  0.1051   2946.2       F Major          4.7     -4.9      0.08   
+  04:16.4  0.1138   2772.1       A Major (~)      4.0     -5.8      0.07   pitch artifact
+  04:48.5  0.101    2361.8       F Minor          3.9     -4.9      0.04   
+  05:20.5  0.0856   2270.5       F Major          4.1     -4.7      0.11   
+  05:52.6  0.0573   1621.9       D# Major (~)     3.8     -3.0      0.03   energy down, pitch artifact
+  06:24.6  0.0949   2128.5       F Major          3.7     -4.8      0.01   energy up
+  06:56.7  0.0925   2240.5       F Major          4.8     -4.7      0.01   
+  07:28.8  0.0437   1663.7       F Major          3.0     -2.2      0.05   energy down
+  08:00.8  0.0153   1747.6       F Major          2.3     -1.7      0.03   energy down
+
+── PANNS AUDIO TAGS ──────────────────────────────────────────
+  Status:              OK — 3 tags above 5% confidence
+  Music-relevant tags:
+    0.719 ██████████████       Music
+    0.649 ████████████         Speech
+  All top tags:
+    0.719  Music
+    0.649  Speech
+    0.306  Boing
+
+── WHISPER LANGUAGE & LYRICS ─────────────────────────────────
+  Language:            EN  (confidence: 0.557)
+  Transcript (818 chars):
+        Oh, no, I don't believe it. Oh, no, I don't believe in
+    it. Oh, no, I don't believe in it. I don't know what I'm
+    talking about, but I don't know what I'm talking about, but
+    I don't know what I'm talking about. I don't know what I'm
+    talking about. I don't know what I'm talking about. I don't
+    know what I'm talking about. I don't know what I'm talking
+    about. I don't know what I'm talking about. I don't know
+    what I'm talking about. I don't know what I'm talking about.
+    I don't know what I'm talking about. I don't know what I'm
+    talking about. I don't know what I'm talking about. I don't
+    know what I'm talking about. I don't know what I'm talking
+    about. I don't know what I'm talking about. I don't know
+    what I'm talking about. I don't know what I'm talking about.
+    I don't know what I'm talking about. Oh Oh Oh Oh Oh Oh
+
+── SUNO TAGS (fill in after listening) ───────────────────────
+  Style Prompt:        [paste your Suno style prompt here]
+  Exclude Tags:        [paste your Suno exclude tags here]
+  Lyrics:              [paste lyrics here or 'see attached']
+  Suno Version:        [v3 / v4 / v5 / v5.5]
+  Subjective:          [how did it actually sound vs intent?]
+  Rating:              [1-10]
+  Notes:               [anything notable — drift, surprises, wins]
+
+=================================================================

@@ -1,6 +1,6 @@
 =================================================================
-AURALSCRIPT v2.1
-Generated: 2026-04-01 19:14:19
+AURALSCRIPT v2.2
+Generated: 2026-04-02 15:19:28
 Source:    meso.mp3
 Mode:      Raw Suno Output
 =================================================================
@@ -120,9 +120,55 @@ Mode:      Raw Suno Output
   Status:              OK — 2 tags above 5% confidence
   Music-relevant tags:
     0.712 ██████████████       Music
+    0.532 ██████████           Speech
   All top tags:
     0.712  Music
     0.532  Speech
+
+── WHISPER LANGUAGE & LYRICS ─────────────────────────────────
+  Language:            EN  (confidence: 0.881)
+  Transcript (2383 chars):
+        What do we get for ten dollars every team you want
+    everything Don't hold it, don't hold it, we love you long
+    time Don't hold it, don't hold it, we love you long time
+    Sitting at home with my dick on hard so I got the black book
+    for a freak to call Picked up the telephone, then dialed the
+    seven digits Yo, it's Marquis baby, are you down with it? I
+    arrived at a house Knocked on the door, not having no idea
+    of what the night had in store I'm like a dog in a pee, a
+    freak without one and I have an appetite for sex Cause me so
+    horny Don't be so horny, don't be so horny, don't be so
+    horny We love you long time Don't be so horny, don't be so
+    horny, don't be so horny We love you long time Girls always
+    ask me why I fuck so much, just say what's wrong baby dog
+    With a quick nut, cause you're the one and you shouldn't be
+    mad I won't tell your mama if you don't tell your dad I know
+    he'll be disgusted when he sees your pussy busted Won't your
+    mama feel so mad if she knew I got that ass I'm a freak
+    indeed, a dog without warning My appetite for sex, cause me
+    so horny Don't be so horny, don't be so horny, don't be so
+    horny We love you long time Don't be so horny, don't be so
+    horny, don't be so horny We love you long time You can say
+    I'm desperate, even call me perverted But you say I'm a dog
+    when I let you fucking desert it I'll play with your heart,
+    just like it's a game I'll be blowin' your mind while you're
+    blowin' my brains I'm just like that man they call Georgie
+    broken pie I fuck all the girls and I make them cry I'm like
+    a dog in heat, a freak without warning I have an appetite
+    for sex, cause me so horny Don't be so horny, don't be so
+    horny We love you long time Don't be so horny, don't be so
+    horny, don't be so horny We love you long time We love you
+    long time It's true you were a virgin until you met me I was
+    the first to make you hot and wet to wet tea You tell your
+    parents that we're going out Never to the movies, just
+    straight to my house You said it yourself, you like it like
+    I do Put your lips on my dick and suck my ass, hold you I'm
+    a freak in heat, a dog without warning My appetite is sex,
+    cause me so horny Don't be so horny, don't be so horny,
+    don't be so horny We love you long time Don't be so horny,
+    don't be so horny, don't be so horny We so horny, don't be
+    so horny, don't be so horny We love you long time Don't be
+    so horny, don't be so horny
 
 ── SUNO TAGS (fill in after listening) ───────────────────────
   Style Prompt:        [paste your Suno style prompt here]
