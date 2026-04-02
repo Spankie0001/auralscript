@@ -1,22 +1,40 @@
 """
-AuralScript Extractor v1.1
-Converts an MP3/WAV file into a structured text schema (AuralScript)
-that can be read and analyzed by an LLM.
+AuralScript Extractor v2.1
+Converts an MP3/WAV file into a structured text schema that can be
+read and analyzed by an LLM to identify genre, style, and sonic character.
 
 Usage:
     python auralscript_extract.py "your_song.mp3"
     python auralscript_extract.py "your_song.mp3" --out "output.txt"
+    python auralscript_extract.py "your_song.mp3" --processed   (DAW-processed files)
 
 Requirements:
     pip install librosa numpy scipy soundfile
 
-New in v1.1:
-    - Bass energy (sub vs mid-bass)
-    - Onset density (notes/hits per second)
-    - Stereo width (requires stereo source)
-    - Tempo stability across segments
-    - Per-segment key tracking in timeline
-    - Fixed dynamic range calculation (excludes near-silence frames)
+Optional (PANNs neural audio tagging):
+    pip install torch --index-url https://download.pytorch.org/whl/cpu
+    pip install panns-inference
+    Then download to C:\\Users\\<you>\\panns_data\\ :
+      - class_labels_indices.csv  (from Google AudioSet)
+      - Cnn14_mAP=0.431.pth      (from Zenodo record 3987831)
+
+What AuralScript captures:
+    META          BPM, key, tempo stability, beat strength
+    ENERGY        RMS, dynamic range, loudness level
+    BASS          Sub vs mid-bass balance, bass character
+    ONSET DENSITY Arrangement busyness, hits per second
+    SPECTRUM      Brightness, centroid, bandwidth
+    DISTORTION    HF noise floor distortion estimate
+    STRUCTURE     Quiet/loud pattern, verse-chorus detection
+    HARMONIC      Chord complexity, tonal stability
+    REVERB/ROOM   Decay time, electronic vs organic hint
+    STEREO WIDTH  Mono vs wide mix
+    TEXTURE       Harmonic/percussive balance, roughness, MFCCs
+    VOCAL         Vocal presence and character in mix
+    TRANSIENTS    Attack sharpness
+    WAVEFORM      ASCII amplitude plot
+    TIMELINE      16-segment breakdown with key, energy, vocal, pitch confidence
+    PANNS TAGS    Neural audio tagging (optional, requires PANNs install)
 """
 
 import librosa
@@ -26,15 +44,23 @@ import os
 import sys
 from datetime import datetime
 
-# Optional PANNs integration — install with:
-#   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
-#   pip install panns-inference
+PANNS_AVAILABLE = False  # default
+
+# Optional PANNs integration
 try:
     import panns_inference
     from panns_inference import AudioTagging, labels as panns_labels
     PANNS_AVAILABLE = True
 except ImportError:
-    PANNS_AVAILABLE = False
+    pass
+
+# Optional Whisper integration — install with:
+#   pip install faster-whisper
+try:
+    from faster_whisper import WhisperModel
+    WHISPER_AVAILABLE = True
+except ImportError:
+    WHISPER_AVAILABLE = False
 
 
 def estimate_stereo_width(filepath):
@@ -215,6 +241,58 @@ def extract(filepath, out_path=None, processed=False):
         density_label = "Busy (active, layered arrangement)"
     else:
         density_label = "Very dense (rapid-fire hits, chaotic energy)"
+
+    # ── SAMPLE / LOOP DETECTION ───────────────────────────────────
+
+    # 1. Beat-tracked IOI variance — use beat frames not all onsets
+    # Beat frames are the rhythmic grid, much more stable signal for quantization
+    if len(beat_frames) > 4:
+        beat_times_sec = librosa.frames_to_time(beat_frames, sr=sr)
+        beat_ioi = np.diff(beat_times_sec)
+        # Filter out outliers (gaps > 3x median = likely missed beat)
+        median_ioi = float(np.median(beat_ioi))
+        beat_ioi_clean = beat_ioi[beat_ioi < median_ioi * 3]
+        if len(beat_ioi_clean) > 2:
+            ioi_cv = float(np.std(beat_ioi_clean) / (np.mean(beat_ioi_clean) + 1e-9))
+        else:
+            ioi_cv = 0.0
+    else:
+        ioi_cv = 0.5  # not enough beats to measure
+
+    if ioi_cv < 0.04:
+        quantization_label = "Highly quantized (drum machine, programmed, or sampled loops)"
+    elif ioi_cv < 0.08:
+        quantization_label = "Moderately quantized (sequenced with slight human feel)"
+    elif ioi_cv < 0.14:
+        quantization_label = "Natural feel (live performance or humanized programming)"
+    else:
+        quantization_label = "Highly irregular (free tempo, rubato, or unstable beat)"
+
+    # 2. Recurrence matrix using MFCCs — timbre repeats, not just harmony
+    hop_rec = 4096
+    mfcc_rec = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, hop_length=hop_rec)
+    mfcc_norm = librosa.util.normalize(mfcc_rec, axis=0)
+    rec_matrix = librosa.segment.recurrence_matrix(
+        mfcc_norm, mode='affinity', sym=True,
+        k=min(10, mfcc_norm.shape[1] - 1)
+    )
+    n = rec_matrix.shape[0]
+    if n > 20:
+        # Vectorized upper triangle excluding near-diagonal (k=10 ~ 3-4 seconds)
+        upper = np.triu(rec_matrix, k=10)
+        nonzero = upper[upper > 0]
+        recurrence_score = float(np.mean(nonzero)) if len(nonzero) > 0 else 0.0
+    else:
+        recurrence_score = 0.0
+
+    if recurrence_score > 0.25:
+        recurrence_label = "Very high repetition (heavy looping — sample-based likely)"
+    elif recurrence_score > 0.15:
+        recurrence_label = "High repetition (loop-based or structured verse/chorus)"
+    elif recurrence_score > 0.08:
+        recurrence_label = "Moderate repetition (standard song structure)"
+    else:
+        recurrence_label = "Low repetition (through-composed, improvised, or collage)"
 
     # ── SPECTRUM ─────────────────────────────────────────────────
     spectral_centroid = float(np.mean(librosa.feature.spectral_centroid(y=y, sr=sr)))
@@ -586,28 +664,26 @@ def extract(filepath, out_path=None, processed=False):
     if PANNS_AVAILABLE:
         try:
             print("[AuralScript] Running PANNs audio tagging...")
-            # PANNs needs 32kHz mono
             y_panns = librosa.resample(y, orig_sr=sr, target_sr=32000)
-            audio_panns = y_panns[None, :]  # add batch dimension
+            audio_panns = y_panns[None, :]
 
             at = AudioTagging(checkpoint_path=None, device='cpu')
             (clipwise_output, _) = at.inference(audio_panns)
 
-            # Get top 15 predictions above threshold
             scores = clipwise_output[0]
             top_indices = np.argsort(scores)[::-1][:15]
             for idx in top_indices:
-                if scores[idx] > 0.05:  # confidence threshold
+                if scores[idx] > 0.05:
                     panns_results.append((panns_labels[idx], float(scores[idx])))
 
-            # Filter for music-relevant tags only
             music_keywords = [
                 'music', 'rock', 'pop', 'jazz', 'blues', 'metal', 'punk',
                 'electronic', 'hip', 'folk', 'country', 'classical', 'dance',
                 'guitar', 'drum', 'bass', 'piano', 'synth', 'vocal', 'sing',
                 'beat', 'rhythm', 'melody', 'chord', 'grunge', 'indie',
                 'ambient', 'house', 'techno', 'funk', 'soul', 'reggae',
-                'distort', 'electric', 'acoustic', 'string', 'wind', 'brass'
+                'distort', 'electric', 'acoustic', 'string', 'wind', 'brass',
+                'yell', 'shout', 'angry', 'whoop', 'bellow', 'speech', 'rap'
             ]
             for label, score in panns_results:
                 if any(kw in label.lower() for kw in music_keywords):
@@ -617,6 +693,39 @@ def extract(filepath, out_path=None, processed=False):
             panns_error = str(e)
             print(f"[AuralScript] PANNs error: {e}")
 
+    # ── WHISPER LANGUAGE & TRANSCRIPTION (optional) ───────────────
+    whisper_language = None
+    whisper_language_prob = None
+    whisper_transcript = None
+    whisper_error = None
+
+    if WHISPER_AVAILABLE:
+        try:
+            print("[AuralScript] Running Whisper language detection...")
+            model = WhisperModel("small", device="cpu", compute_type="int8")
+            segments, info = model.transcribe(filepath, beam_size=5,
+                                              language=None,  # auto-detect
+                                              task="transcribe")
+            whisper_language = info.language
+            whisper_language_prob = round(info.language_probability, 3)
+
+            # Collect transcript — up to 4000 chars
+            transcript_parts = []
+            char_count = 0
+            for seg in segments:
+                text = seg.text.strip()
+                if not text:
+                    continue
+                transcript_parts.append(text)
+                char_count += len(text)
+                if char_count >= 4000:
+                    break
+            whisper_transcript = " ".join(transcript_parts)
+
+        except Exception as e:
+            whisper_error = str(e)
+            print(f"[AuralScript] Whisper error: {e}")
+
     # ── ASSEMBLE AURALSCRIPT ──────────────────────────────────────
     def duration_str_short(d):
         return f"{int(d//60)}:{int(d%60):02d}"
@@ -624,7 +733,7 @@ def extract(filepath, out_path=None, processed=False):
     filename = os.path.basename(filepath)
     lines = []
     lines.append("=" * 65)
-    lines.append("AURALSCRIPT v2.1")
+    lines.append("AURALSCRIPT v2.3")
     lines.append(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     lines.append(f"Source:    {filename}")
     lines.append(f"Mode:      {'DAW-Processed (--processed)' if processed else 'Raw Suno Output'}")
@@ -656,6 +765,12 @@ def extract(filepath, out_path=None, processed=False):
     lines.append(f"  Arrangement:         {density_label}")
     lines.append(f"  Onsets/sec:          {onset_density:.2f}")
     lines.append(f"  Total Onsets:        {len(onset_times)}")
+
+    lines.append("\n── SAMPLE / LOOP DETECTION ───────────────────────────────────")
+    lines.append(f"  Quantization:        {quantization_label}")
+    lines.append(f"  IOI Variance (CV):   {ioi_cv:.3f}  (0=machine-perfect, >0.5=human/free)")
+    lines.append(f"  Recurrence:          {recurrence_label}")
+    lines.append(f"  Recurrence Score:    {recurrence_score:.3f}  (higher = more looping/repetition)")
 
     lines.append("\n── SPECTRUM ──────────────────────────────────────────────────")
     lines.append(f"  Brightness:          {brightness}")
@@ -758,6 +873,30 @@ def extract(filepath, out_path=None, processed=False):
             lines.append("  All top tags:")
             for label, score in panns_results[:10]:
                 lines.append(f"    {score:.3f}  {label}")
+
+    lines.append("\n── WHISPER LANGUAGE & LYRICS ─────────────────────────────────")
+    if not WHISPER_AVAILABLE:
+        lines.append("  Status:              Not installed (pip install faster-whisper)")
+    elif whisper_error:
+        lines.append(f"  Status:              Error — {whisper_error}")
+    else:
+        lang_name = whisper_language.upper() if whisper_language else "Unknown"
+        lines.append(f"  Language:            {lang_name}  (confidence: {whisper_language_prob})")
+        lines.append(f"  Transcript ({len(whisper_transcript)} chars):")
+        if whisper_transcript:
+            # Word-wrap at 60 chars
+            words = whisper_transcript.split()
+            line_buf = "    "
+            for word in words:
+                if len(line_buf) + len(word) + 1 > 64:
+                    lines.append(line_buf)
+                    line_buf = "    " + word
+                else:
+                    line_buf += " " + word if line_buf.strip() else "    " + word
+            if line_buf.strip():
+                lines.append(line_buf)
+        else:
+            lines.append("    [no vocals detected]")
 
     lines.append("\n── SUNO TAGS (fill in after listening) ───────────────────────")
     lines.append("  Style Prompt:        [paste your Suno style prompt here]")

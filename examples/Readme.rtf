@@ -1,0 +1,199 @@
+{\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Calibri;}{\f2\fnil\fcharset1 Segoe UI Symbol;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 # AuralScript\par
+\par
+**AuralScript** converts audio files into structured text schemas that can be read and analyzed by a Large Language Model (LLM) like Claude.\par
+\par
+The core idea: AI music generators like Suno AI produce outputs that often drift from the intended style prompt. AuralScript closes the feedback loop \f1\emdash  extract acoustic features from the output, feed them to an LLM, and get data-driven suggestions on why the output drifted and what prompt adjustments to make.\par
+\par
+---\par
+\par
+## What it does\par
+\par
+AuralScript extracts and serializes the following from any MP3 or WAV file:\par
+\par
+| Section | What it captures |\par
+|---|---|\par
+| META | BPM, key, tempo stability, beat strength |\par
+| ENERGY | RMS, dynamic range, loudness level |\par
+| BASS | Sub vs mid-bass balance, guitar vs synth bass character |\par
+| ONSET DENSITY | Arrangement busyness, hits per second |\par
+| SPECTRUM | Brightness, spectral centroid, bandwidth |\par
+| DISTORTION | High-frequency noise floor distortion estimate |\par
+| STRUCTURE | Quiet/loud alternating pattern, verse-chorus detection |\par
+| HARMONIC | Chord complexity, tonal stability, change rate |\par
+| REVERB / ROOM | Decay time estimate, electronic vs organic instrument hint |\par
+| STEREO WIDTH | Mono vs wide mix (M/S ratio) |\par
+| TEXTURE | Harmonic/percussive balance, roughness, MFCCs |\par
+| VOCAL | Vocal presence and character in mix |\par
+| TRANSIENTS | Attack sharpness (Peak/Mean ratio) |\par
+| WAVEFORM | ASCII amplitude plot of the full song |\par
+| TIMELINE | 16-segment breakdown: energy, key, vocal, pitch confidence |\par
+| PANNS TAGS | Neural audio tagging \emdash  genre, instrument, vocal style (optional) |\par
+\par
+---\par
+\par
+## Example output\par
+\par
+```\par
+=================================================================\par
+AURALSCRIPT v2.1\par
+Source:    worldgonemad.mp3\par
+Mode:      Raw Suno Output\par
+=================================================================\par
+\par
+\f2\u9472?\u9472?\f0  PANNS AUDIO TAGS \f2\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\u9472?\f0\par
+  Music-relevant tags:\par
+    0.867 \f2\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\u9608?\f0     Music\par
+    0.115 \f2\u9608?\u9608?\f0                    Heavy metal\par
+    0.090 \f2\u9608?\f0                     Punk rock\par
+    0.052 \f2\u9608?\f0                     Angry music\par
+  All top tags:\par
+    0.867  Music\par
+    0.221  Speech\par
+    0.151  Yell\par
+    0.090  Punk rock\par
+    0.082  Whoop\par
+```\par
+\par
+---\par
+\par
+## Installation\par
+\par
+### Step 1 \f1\emdash  Install Python 3.12\par
+\par
+Download from {{\field{\*\fldinst{HYPERLINK https://www.python.org/downloads/ }}{\fldrslt{https://www.python.org/downloads/\ul0\cf0}}}}\f1\fs22\par
+\par
+**Critical:** On the first installer screen, check **"Add Python to PATH"**\par
+\par
+Verify:\par
+```\par
+python --version\par
+```\par
+\par
+### Step 2 \emdash  Install core dependencies\par
+\par
+```\par
+pip install librosa\par
+pip install numpy\par
+pip install scipy\par
+pip install soundfile\par
+```\par
+\par
+### Step 3 \emdash  Install PANNs (optional but recommended)\par
+\par
+PANNs adds neural audio tagging \emdash  genre, instrument, and vocal style classification using a model trained on 527 AudioSet sound categories.\par
+\par
+```\par
+pip install torch --index-url {{\field{\*\fldinst{HYPERLINK https://download.pytorch.org/whl/cpu }}{\fldrslt{https://download.pytorch.org/whl/cpu\ul0\cf0}}}}\f1\fs22\par
+pip install panns-inference\par
+```\par
+\par
+Then manually download two files into `C:\\Users\\<yourname>\\panns_data\\`:\par
+\par
+**File 1 \emdash  Class labels CSV:**\par
+```\par
+{{\field{\*\fldinst{HYPERLINK http://storage.googleapis.com/us_audioset/youtube_corpus/v1/csv/class_labels_indices.csv }}{\fldrslt{http://storage.googleapis.com/us_audioset/youtube_corpus/v1/csv/class_labels_indices.csv\ul0\cf0}}}}\f1\fs22\par
+```\par
+Save as: `class_labels_indices.csv`\par
+\par
+**File 2 \emdash  Model checkpoint (~500MB):**\par
+```\par
+{{\field{\*\fldinst{HYPERLINK https://zenodo.org/record/3987831/files/Cnn14_mAP%3D0.431.pth?download=1 }}{\fldrslt{https://zenodo.org/record/3987831/files/Cnn14_mAP%3D0.431.pth?download=1\ul0\cf0}}}}\f1\fs22\par
+```\par
+Save as: `Cnn14_mAP=0.431.pth`\par
+\par
+> Note: PANNs has Windows-specific setup issues. If it doesn't work, AuralScript runs fine without it \emdash  all other sections still work.\par
+\par
+---\par
+\par
+## Usage\par
+\par
+### Basic run\par
+```\par
+python auralscript_extract.py "your_song.mp3"\par
+```\par
+Output saved as: `your_song_auralscript.txt`\par
+\par
+### Specify output path\par
+```\par
+python auralscript_extract.py "your_song.mp3" --out "results/song_v1.txt"\par
+```\par
+\par
+### DAW-processed files\par
+If the file has been through a DAW (edited, mixed, mastered beyond the raw Suno output), add `--processed`. This adjusts thresholds for the structure detector and distortion estimator:\par
+```\par
+python auralscript_extract.py "your_song.mp3" --processed\par
+```\par
+\par
+---\par
+\par
+## The Suno AI workflow\par
+\par
+1. Write a style prompt in Suno AI and generate a song\par
+2. Download the MP3\par
+3. Run AuralScript on it\par
+4. Fill in the SUNO TAGS section at the bottom of the output\par
+5. Paste the full output to Claude (or another LLM)\par
+6. Ask: *"Based on this AuralScript output and my style prompt, why did it drift and what should I change?"*\par
+7. Iterate\par
+\par
+### Example prompt to Claude:\par
+```\par
+Here is my AuralScript output and my Suno style prompt.\par
+The song was supposed to be 90s grunge with quiet verses and loud choruses.\par
+Based on the data, what went wrong and what tags should I adjust?\par
+\par
+[paste AuralScript output]\par
+\par
+Style prompt used: [paste your Suno style prompt]\par
+```\par
+\par
+---\par
+\par
+## What the data tells an LLM\par
+\par
+The key genre-separating signals discovered during development:\par
+\par
+| Signal | Electronic | Organic/Rock |\par
+|---|---|---|\par
+| Decay Consistency | ~0.000 | 0.3\endash 0.9 |\par
+| Spectral Centroid | >4000 Hz | 2500\endash 3500 Hz |\par
+| PANNs tags | Electronic, Synth, EDM | Guitar, Rock, Grunge |\par
+| Tempo Stability | \f0\'b10.0 BPM | \'b10.5\f1\endash 2.0 BPM |\par
+| Distortion HF/Mid | -6 to -8 dB | -10 to -14 dB |\par
+\par
+---\par
+\par
+## Limitations\par
+\par
+- **ZCR roughness** is unreliable for distinguishing distorted guitar from clean synth on compressed audio\par
+- **Pitch confidence (PConf)** is low across all segments for dense/compressed mixes \emdash  this is expected, not a bug\par
+- **Dynamic range** can read as 0 or absurdly high if the file has near-silence at start/end \emdash  v2.1 excludes bottom 5% RMS frames to mitigate this\par
+- **PANNs** does not support Windows natively \emdash  requires manual file download workaround\par
+- BPM sometimes halves or doubles \emdash  if the reading seems wrong, mentally multiply or divide by 2\par
+\par
+---\par
+\par
+## Background\par
+\par
+AuralScript was developed in a single session as an experiment in whether acoustic feature extraction could close the feedback loop on AI-generated music. The concept \emdash  extract features from AI music output, serialize to LLM-readable text, feed back to the AI ecosystem that generated it \emdash  appears to be novel. No prior art found for this specific closed-loop application.\par
+\par
+---\par
+\par
+## License\par
+\par
+MIT License \emdash  use freely, attribution appreciated.\par
+\par
+---\par
+\par
+## Contributing\par
+\par
+Issues and PRs welcome. Key areas for improvement:\par
+- Windows-native neural audio tagging alternative to PANNs\par
+- Similarity scorer / song library database mode\par
+- Better distortion detection on brick-wall limited audio\par
+- Vocal delivery classification (mumbled vs shouted vs sung)\f0\par
+}
+ 

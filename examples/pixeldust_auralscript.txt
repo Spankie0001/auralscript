@@ -1,0 +1,142 @@
+=================================================================
+AURALSCRIPT v2.1
+Generated: 2026-04-01 17:49:15
+Source:    pixeldust.mp3
+Mode:      Raw Suno Output
+=================================================================
+
+── META ──────────────────────────────────────────────────────
+  Duration:            2:59.9
+  BPM:                 119.7
+  Tempo Stability:     Stable (+-0.0 BPM variance)
+  Key:                 C Major
+  Sample Rate:         48000 Hz
+  Beat Strength:       1.196
+
+── ENERGY ────────────────────────────────────────────────────
+  Level:               High (energetic/dense)
+  RMS Mean:            0.1321
+  RMS Peak:            0.3552
+  Dynamic Range:       21.3 dB  (active frames only)
+  Consistency:         Variable (high dynamics)
+
+── BASS ──────────────────────────────────────────────────────
+  Presence:            Bass-forward (warm, heavy low end)
+  Character:           Balanced sub/mid-bass
+  Bass vs Hi-Mid:      +4.2 dB  (0=balanced, +=bass-heavy, -=thin)
+  Sub (20-80Hz):       -4.7 dB  rel to full signal
+  Mid-Bass (80-250Hz): -6.3 dB  rel to full signal
+
+── ONSET DENSITY ─────────────────────────────────────────────
+  Arrangement:         Very dense (rapid-fire hits, chaotic energy)
+  Onsets/sec:          4.97
+  Total Onsets:        894
+
+── SPECTRUM ──────────────────────────────────────────────────
+  Brightness:          Bright/Present (upper-mid forward)
+  Centroid:            4513.2 Hz
+  Bandwidth:           4284.2 Hz
+  Rolloff (85%):       9692.5 Hz
+
+── DISTORTION / FLATNESS ─────────────────────────────────────
+  Distortion Est:      Moderate — overdrive or distorted power chords likely
+  HF/Mid Ratio:        -6.0 dB  (8-16kHz vs 1-4kHz)
+  Flatness Mean:       0.0004  (data only — unreliable on compressed audio)
+  Flatness Variance:   0.0012
+
+── STRUCTURE ─────────────────────────────────────────────────
+  Pattern:             Partial dynamic contrast (some quiet/loud movement)
+  Loud Segments:       4/16
+  Mid Segments:        10/16
+  Quiet Segments:      2/16
+  Transitions:         2
+
+── HARMONIC COMPLEXITY ───────────────────────────────────────
+  Complexity:          Simple/repetitive (few chords, loops — electronic/pop/punk)
+  Tonal Stability:     Moderate tonal center (some ambiguity)
+  Chroma Entropy:      3.554  (higher = more harmonic variety)
+  Chord Change Rate:   0.073  (higher = faster changes)
+
+── REVERB / ROOM ─────────────────────────────────────────────
+  Room Size:           Dry/intimate (small room or tight production)
+  Mean Decay Time:     0.050s  (to -20dB after transient)
+  Instrument Hint:     Consistent decay (suggests synthesized/electronic sources)
+  Decay Consistency:   0.000  (lower = more electronic)
+
+── STEREO WIDTH ──────────────────────────────────────────────
+  Width:               Slightly wide (centered mix)
+  Side/Mid Ratio:      0.271
+
+── TEXTURE ───────────────────────────────────────────────────
+  Balance:             Harmonic-dominant (melodic/tonal content leads)
+  Roughness:           Medium (some grit or complexity)
+  ZCR:                 0.1009
+  MFCC[1-5]:           [-145.28, 102.0, -31.99, 36.07, -14.35]
+  MFCC[6-13]:          [33.11, -21.65, 30.77, -12.38, 7.57, 0.2, 6.48, -0.21]
+
+── VOCAL PRESENCE ────────────────────────────────────────────
+  Level:               Vocals well forward in mix
+  Character:           Warm/boxy (lower mid dominant — may lack air)
+  Vocal Range dB:      -5.1 dB  rel to full signal
+  Presence Range dB:   -11.6 dB  rel to full signal
+
+── TRANSIENTS ────────────────────────────────────────────────
+  Attack:              Sharp attacks (energetic, punchy)
+  Peak/Mean Ratio:     21.48  (higher = snappier)
+  Mean Rise Frames:    6.0
+
+── WAVEFORM (amplitude over time) ───────────────────────────
+  |              ▄                    ▄                   █    |
+  |              █▄                   █                   █    |
+  |              ██        ▄         ▄█  ▄▄        ▄   ▄  █    |
+  |              ██▄▄ ▄ ▄  █     ▄▄▄ ██▄▄██▄    ▄ ▄█ ▄▄█  █    |
+  |    ▄   ▄▄▄ ▄ ████ █ █  █▄  ▄ ███▄███████ ▄▄▄█▄██▄███  █    |
+  |  ▄▄█▄ ▄███▄█ ████ █▄█▄ ██▄▄█▄███████████▄███████████▄▄█    |
+  |  ████▄██████▄████▄████▄████████████████████████████████▄   |
+  |▄▄███████████████████████████████████████████████████████▄▄▄|
+  0                                                        2:59
+
+── TIMELINE (16 segments) ────────────────────────────────────
+  Time     RMS      Centroid     Key              Den/s   VocaldB   PConf   Notes
+  ------------------------------------------------------------------------------
+  00:00.0  0.0549   2324.3       C Minor          7.4     -2.0      0.06   
+  00:11.2  0.1145   3911.1       C Major          4.3     -6.1      0.03   energy up
+  00:22.5  0.1397   4026.4       C Major          5.5     -7.3      0.01   energy up
+  00:33.7  0.1208   4744.3       C Major          4.9     -6.7      0.03   
+  00:45.0  0.137    5027.0       C Major          6.6     -5.9      0.02   
+  00:56.2  0.1245   3955.0       F Major (~)      6.2     -6.8      0.02   pitch artifact
+  01:07.5  0.1291   4907.0       A# Major (~)     6.9     -6.2      0.04   pitch artifact
+  01:18.7  0.1414   5569.1       C Major          6.9     -5.0      0.07   
+  01:30.0  0.161    5312.3       C Major          6.7     -5.4      0.06   
+  01:41.2  0.1564   4661.7       C Major          7.2     -5.3      0.01   
+  01:52.4  0.1918   4175.2       F Major (~)      8.0     -4.0      0.04   energy up, pitch artifact
+  02:03.7  0.1151   4856.0       C Minor          4.4     -1.6      0.06   energy down
+  02:14.9  0.1725   4869.1       C Major          5.6     -3.1      0.09   energy up
+  02:26.2  0.1622   5185.9       C Major          7.7     -5.6      0.01   
+  02:37.4  0.1316   5065.8       C Minor          6.0     -8.1      0.01   energy down
+  02:48.7  0.059    3626.2       C Major          6.1     -5.0      0.02   energy down
+
+── PANNS AUDIO TAGS ──────────────────────────────────────────
+  Status:              OK — 5 tags above 5% confidence
+  Music-relevant tags:
+    0.773 ███████████████      Music
+    0.136 ██                   Pop music
+    0.107 ██                   Electronic music
+    0.096 █                    Electronic dance music
+  All top tags:
+    0.773  Music
+    0.708  Zing
+    0.136  Pop music
+    0.107  Electronic music
+    0.096  Electronic dance music
+
+── SUNO TAGS (fill in after listening) ───────────────────────
+  Style Prompt:        [paste your Suno style prompt here]
+  Exclude Tags:        [paste your Suno exclude tags here]
+  Lyrics:              [paste lyrics here or 'see attached']
+  Suno Version:        [v3 / v4 / v5 / v5.5]
+  Subjective:          [how did it actually sound vs intent?]
+  Rating:              [1-10]
+  Notes:               [anything notable — drift, surprises, wins]
+
+=================================================================
