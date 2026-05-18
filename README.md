@@ -1,7 +1,13 @@
-<<<<<<< HEAD
+
 # AuralScript
 
 **AuralScript** converts audio files into structured text schemas that can be read and analyzed by a Large Language Model (LLM) like Claude.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spankie0001/auralscript/blob/main/colab/AuralScript_Lite.ipynb)
+
+**No installs?** Click the badge above to run **AuralScript-Lite** in your browser via Google Colab. It does about 70% of what the full AuralScript does (BPM, energy curve, spectral centroid, bass/mid balance, section-by-section analysis) with zero setup. See [colab/COLAB_GUIDE.md](colab/COLAB_GUIDE.md) for a step-by-step walkthrough.
+
+---
 
 The core idea: AI music generators like Suno AI produce outputs that often drift from the intended style prompt. AuralScript closes the feedback loop — extract acoustic features from the output, feed them to an LLM, and get data-driven suggestions on why the output drifted and what prompt adjustments to make.
 
@@ -193,7 +199,3 @@ Issues and PRs welcome. Key areas for improvement:
 - Similarity scorer / song library database mode
 - Better distortion detection on brick-wall limited audio
 - Vocal delivery classification (mumbled vs shouted vs sung)
-=======
-# auralscript
-Convert audio files to LLM-readable text schemas for AI music analysis
->>>>>>> 0c30ed1992de886ba9c762eaace305044a3ab736
