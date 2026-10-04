@@ -104,6 +104,11 @@ def extract(filepath, out_path=None, processed=False):
         print(f"ERROR: Could not load file. {e}")
         sys.exit(1)
 
+    # Silent or empty audio breaks the structure analysis — fail with a clear message instead
+    if y.size == 0 or np.max(np.abs(y)) < 1e-4:
+        print("ERROR: File is silent or empty (peak below -80 dBFS). Nothing to analyze.")
+        sys.exit(1)
+
     duration = librosa.get_duration(y=y, sr=sr)
     print(f"[AuralScript] Duration: {duration:.1f}s  Sample rate: {sr}Hz")
 
