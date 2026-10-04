@@ -1,5 +1,5 @@
 """
-AuralScript Extractor v2.1
+AuralScript Extractor v2.3
 Converts an MP3/WAV file into a structured text schema that can be
 read and analyzed by an LLM to identify genre, style, and sonic character.
 
